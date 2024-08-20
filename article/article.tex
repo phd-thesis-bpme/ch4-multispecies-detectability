@@ -1,29 +1,6 @@
-\documentclass[12pt]{article}
+\chapter{Predicting detection probabilities for rare and undersampled North American landbirds}
 
-\usepackage{setspace}
-\doublespacing
-
-\usepackage{natbib}
-\bibliographystyle{apalike}
-
-\usepackage[margin=1.0in]{geometry}
-
-\usepackage{amsmath}
-
-\usepackage{lineno}
-
-\usepackage{graphicx}
-\linenumbers
-
-%opening
-\title{Predicting detection probabilities for rare and undersampled North American landbirds}
-
-\date{}
-\begin{document}
-
-\maketitle
-
-\begin{abstract}
+\section{abstract}
 	
 	Accurate assessments of population status and trends rely on accounting for probability of detection.
 	However, probability of detection is often unaccounted for or unavailable on a species level. 
@@ -33,8 +10,6 @@
 	We showed that a multi-species model improved precision of detectability estimates for species with low sample size, and even with species up to 1000 observations.
 	However, when no data were available for a species, the multi-species models presented here tended to be overly conservative in predicting detectability. 
 	Thus, we recommend using these models to 1) provide more precise estimates of detectability for species where there are sufficient data, 2) generate estimates of detectability for species for which we have sparse (but non-zero) data, and 3) improve upon previous estimates of detection probabilities for North American birds by combining this model with survey-level covariates.
-
-\end{abstract}
 
 \section{Introduction}
 
@@ -281,13 +256,31 @@ With all species included, we obtained a y-intercept of $6.39$ and a slope of $0
 However, two out of the 315 species had a difference in EDR of more than 10\%: Greater Prairie-chicken (\textit{Tympanuchus cupido}) and Chihuahuan Raven (\textit{Corvus cryptoleucus}) (Figure \ref{fig:1vs1}B).
 These species were particularly influential in this regression; after removing these two species, we obtained a y-intercept of $1.25$ and a slope of $0.98$, indicating a near 1-to-1 relationship for the remaining species.
 
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/1vs1.png}
+	\caption{1-to-1 plot comparing cue rates (A) and EDRs (B) estimated from the single-species model vs the multi-species model for each species. Red dashed line denotes the 1-to-1 line. Black line is regression line with posterior draws in grey. Grey dots are individual species.}
+	\label{fig:1vs1}
+\end{figure}
+
 \par For both the removal and distance models, we found little evidence that a multi-species model improved the precision of estimates of cue rate or EDR, respectively.
 For removal modelling, the LOESS curves show some difference in sample sizes less than approximately $\exp\left\{7\right\} \approx 1097$, where the estimated LOESS curve for single-species standard deviation was slightly higher than the estimated LOESS curve for multi-species standard deviations (Figure \ref{fig:sd}A).
 For distance modelling, the curves were relatively equivalent throughout the range of sample sizes (Figure \ref{fig:sd}B).
 
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/sd_comp.png}
+	\caption{LOESS curves of standard deviations of cue rate (A) and EDR (B) for species modelled by a single-species model (blue lines) and multi-species model (red lines).}
+	\label{fig:sd}
+\end{figure}
+
 \par Figure \ref{fig:params} shows the distributions of group-level parameters for both the multi-species removal and distance models. 
 Overall, we found little support for a migrant effect in the multi-species removal models (Figure \ref{fig:params}A), but some evidence for a migrant effect in the multi-species distance models (Figure \ref{fig:params}B).
 We found support for habitat, body mass, and song pitch effects in the multi-species distance models (Figure \ref{fig:params}B).
+
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/parameters_plot.png}
+	\caption{Group parameter posterior distributions for multi-species removal model (A) and multi-species distance model (B).}
+	\label{fig:params}
+\end{figure}
 
 \subsection{Assessment of Model Preference for Data-sparse Species}
 
@@ -303,6 +296,12 @@ Mean overall difference in species-wise mean LPPD was $2.75 \times 10^{-5}$, ind
 Similar to removal models, multi-species distance models tended to have better predictive capacity when sample size was low, with a negligible difference as sample size increased (Figure \ref{fig:cv}B).
 Of the two species with greater than 10\% difference in EDR, the single-species model was preferred for Chihuahuan Raven, while there was no preference for Greater Prairie-chicken.
 
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/kfold_cv_plot.png}
+	\caption{Mean difference in pointwise posterior predictive density for cue rate (A) and EDR (B) vs. log species sample size. Points are mean difference by species. Difference was calculated as multi-species minus single-species, and so positive differences (coloured in red for clarity) represent a multi-species model preference, whereas negative differences (coloured in blue for clarity) represent a single-species model preference. Grey points denote no differences. }
+	\label{fig:cv}
+\end{figure}
+
 \subsection{Assessment of Out-of-sample Predictions}
 
 \par Out-of-sample predictions of cue rate tended to be underestimated compared to estimates obtained with full data (y-intercept = $0.17$, slope = $0.34$; Figure \ref{fig:species_cv}A).
@@ -312,9 +311,28 @@ Interestingly, several of the species with the largest magnitude of difference i
 Of particular note was the fact that the model did not generate any out-of-sample predictions greater than 115 m, nor less than 69 m.
 In fact, the model was particularly conservative in generating estimates for each of the migrant x habitat groups, in that there was very little variation within each of the groups; any variation that did occur would have been due to differences in song pitch and body size (Figure \ref{fig:distance_cv_traits}).
 
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/species_cv_plot.png}
+	\caption{(A) Estimates of cue rate for a species (black dots) given full data versus predictions of cue rate for the same species given no data. (B) Estimates of effective detection radius (EDR) for a species (black dots) given full data versus predictions of EDR for the same species given no data. For both, red dashed line denotes the 1-to-1 line. Black line is regression line with posterior draws in grey.}
+	\label{fig:species_cv}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/species_cv_distance_traits.png}
+	\caption{Estimates of effective detection radius (EDR) for a species (dots) given full data versus predictions of EDR for the same species given no data, focusing in on species with EDRs between 60 m and 150 m. Colours denote discrete trait group combinations of migratory strategy and habitat preference. Red dashed line denotes the 1-to-1 line. Black line is regression line with posterior draws in grey.}
+	\label{fig:distance_cv_traits}
+\end{figure}
+
+
 \subsection{Case Study: Predictions of Cue Rate and EDR for Undersampled Species}
 
 \par We used the multi-species removal model and distance model to generate predictions of cue rate and EDR, respectively, for seven species of undersampled birds from the original NA-POPS analysis (six for distance modelling because Tricolored Blackbird had sufficient distance sampling data; Figure \ref{fig:predictions}).
+
+\begin{figure}[h]
+	\includegraphics{../ch4-multispecies-detectability/output/plots/predictions_figure.png}
+	\caption{(A) Cue rates (red circles) and 90\% credible interval (red lines) for seven species of rare and undersampled North American landbirds. Species are 4 letter banding codes: LEPC = Lesser Prairie-chicken (n = 45), SPOW = Spotted Owl (n = 7), BITH = Bicknell's Thrush (n = 0), LCTH = LeConte's Thrasher (n = 1), HASP = Harris's Sparrow (n = 65), TRBL = Tricoloured Blackbird (n = 74), and KIWA = Kirtland's Warbler (n = 0). Black points are cue rate estimates of other similar species with the same migration strategy, with the opacity of the point indicating the strength of the relationship. (B) Effective detection radius (red circles) and 90\% credible interval (red line) for six species of rare and undersampled North American landbirds. Species are 4 letter banding codes: LEPC = Lesser Prairie-chicken (n = 45), SPOW = Spotted Owl (n = 28), BITH = Bicknell's Thrush (n = 0), LCTH = LeConte's Thrasher (n = 1), HASP = Harris's Sparrow (n = 13), KIWA = Kirtland's Warbler (n = 1). Black points are EDR estimates of species with the same migration strategy and habitat preference, and with a mass and pitch within 40\% in either direction.}
+	\label{fig:predictions}
+\end{figure}
 
 \par As expected, in the absence of any data, the estimated cue rate of Bicknell’s Thrush and Kirtland’s Warbler was shrunk toward cue rates of most similar species.
 For Bicknell's Thrush, the predicted cue rate was 0.28 cues per minute, which fell very close to the overall mean cue rate of 0.27 for the 11 other Turdidae species modelled here.
@@ -456,51 +474,3 @@ Obviously, given the vast amount of bird data available, it was relatively easy 
 However, one benefit that we have shown here is that Bayesian models can still derive reasonable predictions if there are informed enough priors.
 For taxa such as butterflies for which some species have reasonable data and most have very little data \citep{lewthwaite_geographical_2022}, a researcher may still be able to glean reasonable estimates of detectability with the little data available, as long as detectability for some similar species has been examined.
 We suggest that this type of model---where information about detectability is shared among species---be tested with taxa that generally have fewer data collected, and we encourage researchers to continue to make use of existing sources of data \citep{binley_minimizing_2023} to inform these models.
-
-\bibliography{refs}
-
-\section{Figures}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/1vs1.png}
-	\caption{1-to-1 plot comparing cue rates (A) and EDRs (B) estimated from the single-species model vs the multi-species model for each species. Red dashed line denotes the 1-to-1 line. Black line is regression line with posterior draws in grey. Grey dots are individual species.}
-	\label{fig:1vs1}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/sd_comp.png}
-	\caption{LOESS curves of standard deviations of cue rate (A) and EDR (B) for species modelled by a single-species model (blue lines) and multi-species model (red lines).}
-	\label{fig:sd}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/parameters_plot.png}
-	\caption{Group parameter posterior distributions for multi-species removal model (A) and multi-species distance model (B).}
-	\label{fig:params}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/kfold_cv_plot.png}
-	\caption{Mean difference in pointwise posterior predictive density for cue rate (A) and EDR (B) vs. log species sample size. Points are mean difference by species. Difference was calculated as multi-species minus single-species, and so positive differences (coloured in red for clarity) represent a multi-species model preference, whereas negative differences (coloured in blue for clarity) represent a single-species model preference. Grey points denote no differences. }
-	\label{fig:cv}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/species_cv_plot.png}
-	\caption{(A) Estimates of cue rate for a species (black dots) given full data versus predictions of cue rate for the same species given no data. (B) Estimates of effective detection radius (EDR) for a species (black dots) given full data versus predictions of EDR for the same species given no data. For both, red dashed line denotes the 1-to-1 line. Black line is regression line with posterior draws in grey.}
-	\label{fig:species_cv}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/species_cv_distance_traits.png}
-	\caption{Estimates of effective detection radius (EDR) for a species (dots) given full data versus predictions of EDR for the same species given no data, focusing in on species with EDRs between 60 m and 150 m. Colours denote discrete trait group combinations of migratory strategy and habitat preference. Red dashed line denotes the 1-to-1 line. Black line is regression line with posterior draws in grey.}
-	\label{fig:distance_cv_traits}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics{../output/plots/predictions_figure.png}
-	\caption{(A) Cue rates (red circles) and 90\% credible interval (red lines) for seven species of rare and undersampled North American landbirds. Species are 4 letter banding codes: LEPC = Lesser Prairie-chicken (n = 45), SPOW = Spotted Owl (n = 7), BITH = Bicknell's Thrush (n = 0), LCTH = LeConte's Thrasher (n = 1), HASP = Harris's Sparrow (n = 65), TRBL = Tricoloured Blackbird (n = 74), and KIWA = Kirtland's Warbler (n = 0). Black points are cue rate estimates of other similar species with the same migration strategy, with the opacity of the point indicating the strength of the relationship. (B) Effective detection radius (red circles) and 90\% credible interval (red line) for six species of rare and undersampled North American landbirds. Species are 4 letter banding codes: LEPC = Lesser Prairie-chicken (n = 45), SPOW = Spotted Owl (n = 28), BITH = Bicknell's Thrush (n = 0), LCTH = LeConte's Thrasher (n = 1), HASP = Harris's Sparrow (n = 13), KIWA = Kirtland's Warbler (n = 1). Black points are EDR estimates of species with the same migration strategy and habitat preference, and with a mass and pitch within 40\% in either direction.}
-	\label{fig:predictions}
-\end{figure}
-
-\end{document}
