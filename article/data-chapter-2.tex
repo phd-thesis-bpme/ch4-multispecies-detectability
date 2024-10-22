@@ -328,7 +328,7 @@ In fact, the model was particularly conservative in generating estimates for eac
 
 \par We used the multi-species removal model and distance model to generate predictions of cue rate and EDR, respectively, for seven species of undersampled birds from the original NA-POPS analysis (six for distance modelling because Tricolored Blackbird had sufficient distance sampling data; Figure \ref{fig:predictions}).
 
-\begin{figure}[h]
+\begin{figure}[hbtp]
 	\includegraphics{../ch4-multispecies-detectability/output/plots/predictions_figure.png}
 	\caption{(A) Cue rates (red circles) and 90\% credible interval (red lines) for seven species of rare and undersampled North American landbirds. Species are 4 letter banding codes: LEPC = Lesser Prairie-chicken (n = 45), SPOW = Spotted Owl (n = 7), BITH = Bicknell's Thrush (n = 0), LCTH = LeConte's Thrasher (n = 1), HASP = Harris's Sparrow (n = 65), TRBL = Tricoloured Blackbird (n = 74), and KIWA = Kirtland's Warbler (n = 0). Black points are cue rate estimates of other similar species with the same migration strategy, with the opacity of the point indicating the strength of the relationship. (B) Effective detection radius (red circles) and 90\% credible interval (red line) for six species of rare and undersampled North American landbirds. Species are 4 letter banding codes: LEPC = Lesser Prairie-chicken (n = 45), SPOW = Spotted Owl (n = 28), BITH = Bicknell's Thrush (n = 0), LCTH = LeConte's Thrasher (n = 1), HASP = Harris's Sparrow (n = 13), KIWA = Kirtland's Warbler (n = 1). Black points are EDR estimates of species with the same migration strategy and habitat preference, and with a mass and pitch within 40\% in either direction.}
 	\label{fig:predictions}
@@ -436,7 +436,6 @@ This approach seemed to work as the initial values were no longer rejected, but 
 \par In early implementations of this study, the distance model struggled with sampling the posterior distribution, in that over a quarter of the iterations resulted in a divergent transition \citep{betancourt_diagnosing_2016, leimkuhler_simulating_2005}.
 However, after several iterations of this model, we identified that the samplers were not appropriately sampling Rufous Hummingbird's EDR, in that there appeared to be a barrier in being able to sample EDRs less than 25 m. 
 Once we removed Rufous Hummingbird from the analysis, all divergent transitions vanished.
-We demonstrate some of the odd sampling of the posterior for Rufous Hummingbird in Supplemental Materials B.
 One potential explanation is that Rufous Hummingbird had the smallest EDR of all the species in NA-POPS, and so there could be an issue with numerical stability of sampling very low values, due to the exponentiation of a quotient in the distance modelling likelihood.
 Future studies should seek to test the limits of this distance model, particularly in a Bayesian setting, using simulated data with very low EDRs.
 
